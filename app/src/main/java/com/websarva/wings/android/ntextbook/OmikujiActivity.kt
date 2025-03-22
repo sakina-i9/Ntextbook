@@ -1,15 +1,19 @@
 package com.websarva.wings.android.ntextbook
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.websarva.wings.android.ntextbook.databinding.FortuneBinding
 import com.websarva.wings.android.ntextbook.databinding.OmikujiBinding
-import kotlin.random.Random
 
 class OmikujiActivity : AppCompatActivity() {
+    val omikujiShelf = Array(20){
+        OmikujiParts(R.drawable.kiti,R.string.contents1)
+    }
+    var omikujiNumber = -1
+    val omikujiBox = OmikujiBox()
     lateinit var binding: OmikujiBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +21,16 @@ class OmikujiActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        omikujiBox.omikujiView = binding.imageView
+
+        omikujiShelf[0].drawID = R.drawable.daikiti
+        omikujiShelf[0].fortuneID = R.string.contents2
+        omikujiShelf[1].drawID = R.drawable.kyou
+        omikujiShelf[1].fortuneID = R.string.contents9
+        omikujiShelf[2].fortuneID = R.string.contents3
+        omikujiShelf[3].fortuneID = R.string.contents4
+        omikujiShelf[4].fortuneID = R.string.contents5
+        omikujiShelf[5].fortuneID = R.string.contents6
 
         //文字表示
         /*val rnd = Random
@@ -47,12 +61,45 @@ class OmikujiActivity : AppCompatActivity() {
     }
 
     fun onButtonClick(v:View){
+        omikujiBox.shake()
+/*
         val translate = TranslateAnimation(0f,0f,0f,-200f)
         translate.repeatMode = Animation.REVERSE
         translate.repeatCount = 5
         translate.duration = 100
-        binding.imageView.startAnimation(translate)
+
+        val rotate = RotateAnimation(0f,36f,binding.imageView.width/2f,binding.imageView.height/2f)
+        rotate.duration = 200
+
+        val set = AnimationSet(true)
+        set.addAnimation(rotate)
+        set.addAnimation(translate)
+
+        binding.imageView.startAnimation(set)
 
         //binding.imageView.setImageResource(R.drawable.daikiti)
+
+ */
+    }
+
+    fun drawResult(){
+        omikujiNumber = omikujiBox.number
+
+        val op = omikujiShelf[omikujiNumber]
+
+        val fortuneBinding = FortuneBinding.inflate(layoutInflater)
+        setContentView(fortuneBinding.root)
+
+        fortuneBinding.imageView2.setImageResource(op.drawID)
+        fortuneBinding.textView.setText(op.fortuneID)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if(event?.action == MotionEvent.ACTION_DOWN){
+            if(omikujiNumber < 0 && omikujiBox.finish){
+                drawResult()
+            }
+        }
+        return super.onTouchEvent(event)
     }
 }
