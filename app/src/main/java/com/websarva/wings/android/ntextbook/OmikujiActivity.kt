@@ -1,14 +1,41 @@
 package com.websarva.wings.android.ntextbook
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.websarva.wings.android.ntextbook.databinding.FortuneBinding
 import com.websarva.wings.android.ntextbook.databinding.OmikujiBinding
 
 class OmikujiActivity : AppCompatActivity() {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        /*
+        val toast = Toast.makeText(this, item.title, Toast.LENGTH_LONG)
+        toast.show()
+        */
+
+        if(item.itemId == R.id.item1){
+            val intent = Intent(this, OmikujiPreferenceActivity::class.java)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this,AboutActivity::class.java)
+            startActivity(intent)
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     val omikujiShelf = Array(20){
         OmikujiParts(R.drawable.kiti,R.string.contents1)
     }
@@ -20,6 +47,10 @@ class OmikujiActivity : AppCompatActivity() {
         binding = OmikujiBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val value = pref.getBoolean("button", false)
+        binding.button.visibility = if(value)View.VISIBLE else View.INVISIBLE
 
         omikujiBox.omikujiView = binding.imageView
 
@@ -103,3 +134,4 @@ class OmikujiActivity : AppCompatActivity() {
         return super.onTouchEvent(event)
     }
 }
+

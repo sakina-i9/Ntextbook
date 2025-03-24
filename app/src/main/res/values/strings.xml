@@ -10,4 +10,9 @@
     <string name="contents7">金運は、ボランティア活動が上昇のきっかけになるはず。</string>
     <string name="contents8">恋愛は辛抱が大事です。</string>
     <string name="contents9">寝不足に注意しましょう。</string>
+    <string name="setting">設定</string>
+    <string name="about_app">アプリについて</string>
+    <string name="btn_on_of">ボタンの表示あり/なしを切り替えます。</string>
+    <string name="btn_on">ボタン表示</string>
+    <string name="btn">ボタン</string>
 </resources>

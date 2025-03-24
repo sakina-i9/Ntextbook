@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference android:summary="@string/btn_on_of" android:title="@string/btn_on" android:key="button" android:defaultValue="false"/>
+</PreferenceScreen>

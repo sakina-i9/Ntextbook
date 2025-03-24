@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/omikuji" />
 
     <Button
-        android:id="@+id/bt_action"
+        android:id="@+id/button"
         android:layout_width="278dp"
         android:layout_height="53dp"
         android:layout_gravity="center"
